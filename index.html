@@ -2,6 +2,7 @@
 <html lang="zh-TW">
 
 <head>
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width">
   <link rel="stylesheet" type="text/css" href="style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -68,19 +69,15 @@
     <div style="height: 100%;">
       <img class="logo" src="resource/SVG/聯繫方式.svg" alt="聯繫方式">
       <br>
-      <button class="button" onclick="window.open('https://twitter.com/Cicada0001', '_blank')">Twitter</button>
+      <button class="button" onclick="window.open('https://www.linkedin.com/in/yihuang001/', '_blank')">LinkedIn</button>
       <br>
-      <button class="button" onclick="window.open('https://t.me/CicadaLYW', '_blank')">Telegram</button>
+      <button class="button" onclick="window.open('https://www.xiaohongshu.com/user/profile/658b8193000000002200513e', '_blank')">RED</button>
       <br>
-      <button class="button" onclick="window.open('https://mastodon.social/@Cicada0001', '_blank')">Mastodon</button>
+      <button class="button" onclick="window.open('https://github.com/yihuang0830', '_blank')">Github</button>
       <br>
-      <button class="button" onclick="window.open('https://github.com/cicada000', '_blank')">Github</button>
+      <button class="button" onclick="window.open('https://www.instagram.com/imewhoru11/', '_blank')">Instagram</button>
       <br>
-      <button class="button" onclick="window.open('https://www.instagram.com/cicada000', '_blank')">Instagram</button>
-      <br>
-      <button class="button" onclick="window.open('mailto:cicada000@cicada000.work', '_blank')">Email</button>
-      <br>
-      <button class="button" onclick="window.open('https://steamcommunity.com/id/cicada000', '_blank')">Steam</button>
+      <button class="button" onclick="copyEmail('huangyi20070830@gmail.com')">Email</button>
     </div>
 
     <div style="height: 100%;">
@@ -226,6 +223,34 @@
       </button>
 
     </div>
+
+    <div id="toast">已複製</div>
+    <script> // 点击复制邮箱，右下角提示
+      function copyEmail(email) {
+        const showToast = () => {
+          const toast = document.getElementById('toast');
+          toast.classList.add('show');
+          clearTimeout(window._toastTimer);
+          window._toastTimer = setTimeout(() => toast.classList.remove('show'), 2000);
+        };
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(email).then(showToast).catch(fallbackCopy);
+        } else {
+          fallbackCopy();
+        }
+        function fallbackCopy() {
+          const ta = document.createElement('textarea');
+          ta.value = email;
+          ta.style.position = 'fixed';
+          ta.style.opacity = '0';
+          document.body.appendChild(ta);
+          ta.select();
+          try { document.execCommand('copy'); } catch (e) {}
+          document.body.removeChild(ta);
+          showToast();
+        }
+      }
+    </script>
 
     <div id="threejs-cross"></div>
     <script>
