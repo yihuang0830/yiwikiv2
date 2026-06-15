@@ -9,8 +9,14 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@700&display=swap" rel="stylesheet">
   <script src="https://unpkg.com/htmx.org@1.9.3"></script>
-  <script src="https://cdn.jsdelivr.net/npm/three@0.154.0/build/three.min.js"></script>
-  <script src="resource/OBJLoader.js"></script>
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.154.0/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.154.0/examples/jsm/"
+      }
+    }
+  </script>
   <link rel="icon" type="image/png" href="favicon.png">
   <title>
     yiwiki
@@ -255,7 +261,10 @@
     </script>
 
     <div id="threejs-cross"></div>
-    <script>
+    <script type="module">
+      import * as THREE from 'three';
+      import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+
       if (window.matchMedia("(min-aspect-ratio: 1)").matches) {
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 1000);
@@ -264,36 +273,38 @@
         const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
         renderer.setSize(500, 500);
         renderer.setPixelRatio(window.devicePixelRatio);
+        renderer.outputColorSpace = THREE.SRGBColorSpace;
         const container = document.getElementById('threejs-cross');
         container.appendChild(renderer.domElement);
 
         // 灯光
-        const light = new THREE.DirectionalLight(0xffffff, 1);
+        const light = new THREE.DirectionalLight(0xffffff, 1.2);
         light.position.set(5, 10, 7.5);
         scene.add(light);
 
-        const ambient = new THREE.AmbientLight(0xffffff, 0.6);
+        const ambient = new THREE.AmbientLight(0xffffff, 0.8);
         scene.add(ambient);
 
-        // 加载OBJ模型
-        const loader = new THREE.OBJLoader();
+        // 用 pivot 让模型绕自身中心旋转
+        const pivot = new THREE.Group();
+        scene.add(pivot);
         let model;
-        loader.load('resource/朗基努斯之枪.obj', function (obj) {
-          model = obj;
-          model.scale.set(1.5, 1.5, 1.5); // 根据需要调整大小
 
-          // 为所有 mesh 设置基础材质
-          model.traverse(function (child) {
-            if (child.isMesh) {
-              child.material = new THREE.MeshStandardMaterial({
-                color: 0x6C0712, // 灰色
-                metalness: 0.3,
-                roughness: 0.7
-              });
-            }
-          });
+        // 加载 GLB 模型（自带颜色和材质）
+        const loader = new GLTFLoader();
+        loader.load('resource/cute_cat.glb', function (gltf) {
+          model = gltf.scene;
 
-          scene.add(model);
+          // 自动居中 + 缩放到合适大小
+          const box = new THREE.Box3().setFromObject(model);
+          const center = box.getCenter(new THREE.Vector3());
+          const size = box.getSize(new THREE.Vector3());
+          const maxDim = Math.max(size.x, size.y, size.z);
+          model.position.sub(center);            // 把几何中心移到原点
+          pivot.add(model);
+          pivot.scale.setScalar(14 / maxDim);    // 缩放填满视野
+
+          model = pivot;                          // 旋转 pivot
         });
 
         // 交互逻辑
@@ -346,8 +357,6 @@
           requestAnimationFrame(animate);
           if (model && autoRotate) {
             model.rotation.y += 0.005;
-            model.rotation.x += 0.001;
-            model.rotation.z += 0.001;
           }
           renderer.render(scene, camera);
         }
