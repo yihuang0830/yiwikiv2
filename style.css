@@ -25,6 +25,9 @@
     .page-number {
         filter: invert(1);
     }
+    .lang-switch {
+        filter: invert(1);
+    }
     .linkbox {
         filter: invert(1);
     }
@@ -105,7 +108,7 @@ html::-webkit-scrollbar { /* 隐藏滚动条 */
     font-size: 15px;
     position: fixed;
     top: 20px;
-    right: 20px;
+    right: 90px;
     width: 10%;
     min-width: 50px;
     max-width: 100px;
@@ -117,6 +120,28 @@ html::-webkit-scrollbar { /* 隐藏滚动条 */
 }
 
 .page-number:hover {
+    color: white;
+    background-color: black;
+}
+
+.lang-switch {
+    font-family: 'Noto Serif TC', serif;
+    text-align: center;
+    color: black;
+    font-size: 15px;
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 50px;
+    border: 2px solid black;
+    padding: 2px;
+    background-color: white;
+    cursor: pointer;
+    z-index: 101;
+    transition: color 1s, background-color 1s;
+}
+
+.lang-switch:hover {
     color: white;
     background-color: black;
 }

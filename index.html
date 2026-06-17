@@ -27,6 +27,19 @@
 
   <button class="page-number">0%</button>
 
+  <!-- 中英文切换按钮（右上角）。目前只切换按钮自身文字，内容切换下一步再做 -->
+  <button class="lang-switch" id="langSwitch">EN</button>
+
+  <script>
+    var langSwitch = document.getElementById("langSwitch");
+    var currentLang = "zh"; // 当前语言：zh = 中文，en = English
+    langSwitch.addEventListener("click", function () {
+      currentLang = currentLang === "zh" ? "en" : "zh";
+      // 按钮上显示的是“点一下会切到的目标语言”
+      langSwitch.textContent = currentLang === "zh" ? "EN" : "中";
+    });
+  </script>
+
   <script> //判断页面滚动进度
     var pageNumber = document.querySelector(".page-number");
     var timer;
