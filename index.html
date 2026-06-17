@@ -68,17 +68,27 @@
   <div style="height: 100%;">
     <span class="logo" data-zh="個人簡介" data-en="About">個人簡介</span>
     <div style="margin-left: -6%;">
-      <p>&emsp;&emsp;<span id="year"></span>歲，是學生。</p>
-      <p>&emsp;&emsp;現長居浙江，愛好攝影、小提琴（好久沒練了），喜歡擺弄各種小玩意，<button
-          class="linkbutton">成分複雜</button>。喜歡探索新事物。目前正在努力學習各項知識中......</p>
-      <p>&emsp;&emsp;INFP，努力學習社交中，歡迎PM，熟悉後也許可面基？聯繫方式見下方。</p>
+      <p>&emsp;&emsp;<span id="year"></span>歲，男。</p>
+      <p>&emsp;&emsp;美本<span id="grade"></span>，在美國聖路易斯上學，計算機+腦科學雙專業，愛好健身、徒步、交朋友、<button
+          class="linkbutton">探索新奇的概念</button>。很菜，還需要學習很多東西，但俺絕不認輸……</p>
+      <p>&emsp;&emsp;MBTI每一項都佔50%，雖然我本來也不相信這個。一個非常佛系的人，但是偶爾也會很不佛系。好吧我也不知道我在說什麼。聯繫方式見下方。</p>
     </div>
 
-    <script> //JS判断年龄
-      var date = new Date();
-      var year = date.getFullYear();
-      var span = document.getElementById("year");
-      span.innerHTML = year - 2005;
+    <script> //JS自动计算年龄和年级
+      var now = new Date();
+
+      // 年龄：2007-08-30 出生，当年生日还没过就减 1
+      var age = now.getFullYear() - 2007;
+      if (now < new Date(now.getFullYear(), 7, 30)) { age -= 1; } // 月份 0 起算，7 = 八月
+      document.getElementById("year").innerHTML = age;
+
+      // 年级：2025-2026 学年为大二，每年秋季（9 月起）自动 +1
+      var grades = ["大一", "大二", "大三", "大四"];
+      var acadYear = (now.getMonth() >= 8) ? now.getFullYear() : now.getFullYear() - 1;
+      var gi = acadYear - 2024; // 2024 秋 = 大一
+      if (gi < 0) { gi = 0; }
+      if (gi > 3) { gi = 3; } // 毕业后封顶在大四，到时记得手动更新
+      document.getElementById("grade").innerHTML = grades[gi];
     </script>
 
   </div>
@@ -187,7 +197,7 @@
       import * as THREE from 'three';
       import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
-      if (window.matchMedia("(min-aspect-ratio: 1)").matches) {
+      if (window.matchMedia("(min-width: 769px)").matches) {
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 1000);
         camera.position.z = 30;
