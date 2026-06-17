@@ -1,5 +1,11 @@
 .logo {
-    height: 50px; 
+    display: inline-block;
+    font-family: 'Noto Serif TC', serif;
+    font-weight: 700;
+    font-size: 42px;       /* 与原 SVG 标题字大小一致 */
+    line-height: 50px;     /* 保持原图 50px 的占位高度，位置不变 */
+    color: black;
+    white-space: nowrap;
     margin-left: 15%;
     margin-top: 20%;
 }
@@ -39,8 +45,9 @@
 /* 移动端布局 */
 @media screen and (max-aspect-ratio: 1) {
     .logo {
-        height: 45px;
-        margin-left: 15%; 
+        font-size: 38px;
+        line-height: 45px;
+        margin-left: 15%;
         margin-top: 50%;
     }
     .button {
@@ -157,6 +164,7 @@ html::-webkit-scrollbar { /* 隐藏滚动条 */
     border-width: 2px;
     margin-top: 20px;
     margin-right: 20px;
+    padding-left: 14px;
     font-family: 'Noto Serif TC', serif;
     text-align: left;
     transition: all 1s;
@@ -191,6 +199,27 @@ html::-webkit-scrollbar { /* 隐藏滚动条 */
 #toast.show {
     opacity: 1;
     visibility: visible;
+}
+
+.site-footer {
+    text-align: center;
+    color: black;
+    font-family: 'Noto Serif TC', serif;
+    font-size: 14px;
+    padding: 40px 0 20px;
+}
+
+.site-footer a {
+    color: black;
+}
+
+@media (prefers-color-scheme: dark) {
+    .site-footer {
+        color: white;
+    }
+    .site-footer a {
+        color: white;
+    }
 }
 
 #threejs-cross {

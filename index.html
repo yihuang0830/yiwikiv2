@@ -33,10 +33,19 @@
   <script>
     var langSwitch = document.getElementById("langSwitch");
     var currentLang = "zh"; // 当前语言：zh = 中文，en = English
+
+    // 把所有带 data-zh / data-en 的元素切换到指定语言
+    function applyLang(lang) {
+      document.querySelectorAll("[data-zh]").forEach(function (el) {
+        el.textContent = el.dataset[lang]; // lang 为 "zh" 或 "en"
+      });
+      // 按钮上显示的是“点一下会切到的目标语言”
+      langSwitch.textContent = lang === "zh" ? "EN" : "中";
+    }
+
     langSwitch.addEventListener("click", function () {
       currentLang = currentLang === "zh" ? "en" : "zh";
-      // 按钮上显示的是“点一下会切到的目标语言”
-      langSwitch.textContent = currentLang === "zh" ? "EN" : "中";
+      applyLang(currentLang);
     });
   </script>
 
@@ -57,7 +66,7 @@
   </script>
 
   <div style="height: 100%;">
-    <img class="logo" src="resource/SVG/個人簡介.svg" alt="個人簡介">
+    <span class="logo" data-zh="個人簡介" data-en="About">個人簡介</span>
     <div style="margin-left: -6%;">
       <p>&emsp;&emsp;<span id="year"></span>歲，是學生。</p>
       <p>&emsp;&emsp;現長居浙江，愛好攝影、小提琴（好久沒練了），喜歡擺弄各種小玩意，<button
@@ -86,7 +95,7 @@
     </div>
 
     <div style="height: 100%;">
-      <img class="logo" src="resource/SVG/聯繫方式.svg" alt="聯繫方式">
+      <span class="logo" data-zh="聯繫方式" data-en="Contact">聯繫方式</span>
       <br>
       <button class="button" onclick="window.open('https://www.linkedin.com/in/yihuang001/', '_blank')">LinkedIn</button>
       <br>
@@ -99,148 +108,50 @@
       <button class="button" onclick="copyEmail('huangyi20070830@gmail.com')">Email</button>
     </div>
 
-    <div style="height: 100%;">
-      <img class="logo" src="resource/SVG/個人網站.svg" alt="個人網站">
+    <div style="min-height: 100%; margin-left: 15%; width: 60%; max-width: 670px;">
+      <span class="logo" style="margin-left: 0;" data-zh="項目" data-en="Projects">項目</span>
       <br>
-      <button class="button" onclick="window.open('https://blog.cicada000.work', '_blank')">Blog</button>
-      <br>
-      <button class="button" onclick="window.open('https://onetextimage.cicada000.work', '_blank')">OneText</button>
-      <br>
-      <button class="button" onclick="window.open('https://onetext.cicada000.work', '_blank')">OneText API</button>
-      <br>
-      <button class="button"
-        onclick="window.location.href='https://seiheki-demo.cicada000.work/'">Hugo-Theme-Seiheki</button>
+      <button class="linkbox" onclick="window.open('https://github.com/yihuang0830/Unscroll', '_blank')">
+        <img src="https://github.com/yihuang0830.png" onerror="this.src='resource/SVG/404.svg'" alt="Unscroll"
+          referrerpolicy="no-referrer" class="img">
+        <br>
+        Unscroll
+        <br>
+        &emsp;
+      </button>
+
+      <button class="linkbox" onclick="window.open('https://github.com/yihuang0830/Plotted', '_blank')">
+        <img src="https://github.com/yihuang0830.png" onerror="this.src='resource/SVG/404.svg'" alt="Plotted"
+          referrerpolicy="no-referrer" class="img">
+        <br>
+        Plotted
+        <br>
+        &emsp;
+      </button>
     </div>
 
     <div style="min-height: 100%; margin-left: 15%; width: 60%; max-width: 670px;">
-      <img class="logo" src="resource/SVG/友鏈.svg" alt="友鏈" style="margin-left: 0;">
+      <span class="logo" style="margin-left: 0;" data-zh="推薦" data-en="Recommends">推薦</span>
       <br>
-      <button class="linkbox" onclick="window.open('https://with.fish/', '_blank')">
-        <img src="https://with.fish/favicon.jpg" onerror="this.src='resource/SVG/404.svg'" alt="lz233"
+      <button class="linkbox"
+        onclick="window.open('https://space.bilibili.com/325864133?spm_id_from=333.337.0.0', '_blank')">
+        <img src="https://www.bilibili.com/favicon.ico" onerror="this.src='resource/SVG/404.svg'" alt="飞天闪客"
           referrerpolicy="no-referrer" class="img">
         <br>
-        with.fish
-        <br>
-        魚類觀測研究所
-      </button>
-
-      <button class="linkbox" onclick="window.open('https://noxylva.org', '_blank')">
-        <img src="https://nedifinita.com/picture.jpg" onerror="this.src='resource/SVG/404.svg'" alt="nedifinita"
-          referrerpolicy="no-referrer" class="img">
-        <br>
-        Nedifinita
-        <br>
-        El nom és obligatori
-      </button>
-
-      <button class="linkbox" onclick="window.open('https://cynosura.one', '_blank')">
-        <img src="https://cynosura.one/img/avatar.webp" onerror="this.src='resource/SVG/404.svg'" alt="Cynosura"
-          referrerpolicy="no-referrer" class="img">
-        <br>
-        Cynosura
+        飞天闪客
         <br>
         &emsp;
       </button>
 
-      <button class="linkbox" onclick="window.open('https://stv.pm', '_blank')">
-        <img src="https://stv.pm/favicon.jpeg" onerror="this.src='resource/SVG/404.svg'" alt="Steven Lynn"
+      <button class="linkbox"
+        onclick="window.open('https://space.bilibili.com/1815948385?spm_id_from=333.788.upinfo.detail.click', '_blank')">
+        <img src="https://www.bilibili.com/favicon.ico" onerror="this.src='resource/SVG/404.svg'" alt="马克的技术工作坊"
           referrerpolicy="no-referrer" class="img">
         <br>
-        Steven Lynn
+        马克的技术工作坊
         <br>
         &emsp;
       </button>
-
-      <button class="linkbox" onclick="window.open('https://blog.hightechbrain.net', '_blank')">
-        <img src="https://blog.hightechbrain.net/img/avatar.png" onerror="this.src='resource/SVG/404.svg'"
-          alt="hightechbrain" referrerpolicy="no-referrer" class="img">
-        <br>
-        高科技的指揮中心
-        <br>
-        &emsp;
-      </button>
-
-      <button class="linkbox" onclick="window.open('https://www.fantanstic.top', '_blank')">
-        <img src="https://www.fantanstic.top/img/head.jpg" onerror="this.src='resource/SVG/404.svg'" alt="hightechbrain"
-          referrerpolicy="no-referrer" class="img">
-        <br>
-        老陳の鹹魚日常
-        <br>
-        Life is fantanstic.
-      </button>
-
-      <button class="linkbox" onclick="window.open('https://www.moraex.com', '_blank')">
-        <img src="https://moraex.com/wp-content/uploads/2025/12/mexbloglogo.svg"
-          onerror="this.src='resource/SVG/404.svg'" alt="moraex" referrerpolicy="no-referrer" class="img">
-        <br>
-        MoraEX博客
-        <br>
-        學無止境 知行合一
-      </button>
-
-      <button class="linkbox" onclick="window.open('https://uguisu.ch', '_blank')">
-        <img src="https://uguisu.ch/wp-content/uploads/favicon-150x150.png" onerror="this.src='resource/SVG/404.svg'"
-          alt="uguisu" referrerpolicy="no-referrer" class="img">
-        <br>
-        鶯茶
-        <br>
-        Warbler's Tea
-      </button>
-
-      <button class="linkbox" onclick="window.open('https://seimo.cn', '_blank')">
-        <img src="https://s1.ax1x.com/2023/07/28/pCzo9vF.jpg" onerror="this.src='resource/SVG/404.svg'" alt="seimo"
-          referrerpolicy="no-referrer" class="img">
-        <br>
-        Seimo's Homepage
-        <br>
-        不負熱愛，奔赴山河。
-      </button>
-
-      <button class="linkbox" onclick="window.open('https://blog.messyghost.net', '_blank')">
-        <img src="https://blog.messyghost.net/favicon.ico" onerror="this.src='resource/SVG/404.svg'" alt="messyghost"
-          referrerpolicy="no-referrer" class="img">
-        <br>
-        Messy Ghost's Blog
-        <br>
-        仍然在學習中……
-      </button>
-
-      <button class="linkbox" onclick="window.open('https://ivansnow02.github.io', '_blank')">
-        <img src="https://blog.ivansnow02.xyz/img/avatar.png" onerror="this.src='resource/SVG/404.svg'"
-          alt="Snow's Blog" referrerpolicy="no-referrer" class="img">
-        <br>
-        Snow's Blog
-        <br>
-        Ivan Snow
-      </button>
-
-      <button class="linkbox" onclick="window.open('https://blog.xinshijiededa.men', '_blank')">
-        <img src="https://raw.githubusercontent.com/OverflowCat/blog/test_a/imgs/avatar/xni.png"
-          onerror="this.src='resource/SVG/404.svg'" alt="xinshijiededamen" referrerpolicy="no-referrer" class="img">
-        <br>
-        新世界的大门
-        <br>
-        悟已往之不諫，知來者之可追
-      </button>
-
-      <button class="linkbox" onclick="window.open('https://www.aprdec.top', '_blank')">
-        <img src="https://luchetuchuang.oss-cn-beijing.aliyuncs.com/mcskins/aptdec.jpg"
-          onerror="this.src='resource/SVG/404.svg'" alt="xinshijiededamen" referrerpolicy="no-referrer" class="img">
-        <br>
-        孟夏十二の天空
-        <br>
-        学习,还是学习
-      </button>
-
-      <button class="linkbox" onclick="window.open('https://lvyovo-wiki.tech', '_blank')">
-        <img src="https://lvyovo-wiki.tech/images/avatar.png"
-          onerror="this.src='resource/SVG/404.svg'" alt="xinshijiededamen" referrerpolicy="no-referrer" class="img">
-        <br>
-        lvy-neko
-        <br>
-        &emsp;
-      </button>
-
     </div>
 
     <div id="toast">已複製</div>
@@ -374,6 +285,10 @@
         animate();
       }
     </script>
+
+    <footer class="site-footer">
+      Website template from <a href="https://www.cicada000.work/" target="_blank" rel="noopener">here</a>
+    </footer>
 </body>
 
 </html>
