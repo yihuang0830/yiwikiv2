@@ -76,6 +76,19 @@
     font-size: 15px;
 }
 
+/* 纯文字下划线样式：无白框，跟随正文，可跨行换行 */
+.linktext {
+    display: inline;
+    background: transparent;
+    border: 0;
+    padding: 0;
+    margin: 0;
+    color: inherit;
+    font: inherit;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
 .button{
     background-color: transparent;
     border-style: solid;
@@ -112,6 +125,8 @@ p {
 /* 英文正文：左对齐（空格正常），单词放不下时用 - 断词换行 */
 .lang-en p {
     text-align: left;
+    width: 380px;          /* 英文版每行更长，中文仍用默认 270px */
+    -webkit-hyphens: auto;
     hyphens: auto;
 }
 
