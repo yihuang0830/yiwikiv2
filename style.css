@@ -100,8 +100,19 @@
 p {
     color: black;
     margin-left: 20%;
-    width: 260px;
+    width: 270px;
     font-family: 'Noto Serif TC', serif;
+}
+
+/* 默认显示中文，英文版隐藏，点切换按钮再显示 */
+.lang-en {
+    display: none;
+}
+
+/* 英文正文：左对齐（空格正常），单词放不下时用 - 断词换行 */
+.lang-en p {
+    text-align: left;
+    hyphens: auto;
 }
 
 html::-webkit-scrollbar { /* 隐藏滚动条 */

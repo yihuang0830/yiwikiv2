@@ -36,8 +36,16 @@
 
     // 把所有带 data-zh / data-en 的元素切换到指定语言
     function applyLang(lang) {
+      // 标题等纯文字元素：直接替换文字
       document.querySelectorAll("[data-zh]").forEach(function (el) {
         el.textContent = el.dataset[lang]; // lang 为 "zh" 或 "en"
+      });
+      // 含内联元素的整段（个人简介正文）：整块显示/隐藏
+      document.querySelectorAll(".lang-zh").forEach(function (el) {
+        el.style.display = (lang === "zh") ? "block" : "none";
+      });
+      document.querySelectorAll(".lang-en").forEach(function (el) {
+        el.style.display = (lang === "en") ? "block" : "none";
       });
       // 按钮上显示的是“点一下会切到的目标语言”
       langSwitch.textContent = lang === "zh" ? "EN" : "中";
@@ -68,27 +76,39 @@
   <div style="height: 100%;">
     <span class="logo" data-zh="個人簡介" data-en="About">個人簡介</span>
     <div style="margin-left: -6%;">
-      <p>&emsp;&emsp;<span id="year"></span>歲，男。</p>
-      <p>&emsp;&emsp;美本<span id="grade"></span>，在美國聖路易斯上學，計算機+腦科學雙專業，愛好健身、徒步、交朋友、<button
-          class="linkbutton">探索新奇的概念</button>。很菜，還需要學習很多東西，但俺絕不認輸……</p>
-      <p>&emsp;&emsp;MBTI每一項都佔50%，雖然我本來也不相信這個。一個非常佛系的人，但是偶爾也會很不佛系。好吧我也不知道我在說什麼。聯繫方式見下方。</p>
+      <!-- 中文版 -->
+      <div class="lang-zh">
+        <p>&emsp;&emsp;<span class="year"></span>歲，男。</p>
+        <p>&emsp;&emsp;美本<span class="grade-zh"></span>，在美國聖路易斯上學，計算機+腦科學雙專業，愛好健身、徒步、交朋友、<button
+            class="linkbutton">探索新奇的概念</button>。很菜，還需要學習很多東西，但俺絕不認輸……</p>
+        <p>&emsp;&emsp;MBTI每一項都佔50%，雖然我本來也不相信這個。一個非常佛系的人，但是偶爾也會很不佛系。好吧我也不知道我在說什麼。聯繫方式見下方。</p>
+      </div>
+      <!-- English version -->
+      <div class="lang-en" lang="en">
+        <p>&emsp;&emsp;<span class="year"></span> years old, male.</p>
+        <p>&emsp;&emsp;A <span class="grade-en"></span> at WashU in St. Louis, USA, double-majoring in Computer Science and Neu&shy;ro&shy;sci&shy;ence. I love working out, hiking, making friends, and <button
+            class="linkbutton">exploring novel ideas</button>. Still pretty green with a lot left to learn — but I never back down……</p>
+        <p>&emsp;&emsp;Every one of my MBTI axes sits right at 50% (not that I believed in it anyway). A very go-with-the-flow person, though every now and then, not at all. OK, I'm not even sure what I'm saying anymore. Contact info below.</p>
+      </div>
     </div>
 
-    <script> //JS自动计算年龄和年级
+    <script> //JS自动计算年龄和年级（中英文两套都填充）
       var now = new Date();
 
       // 年龄：2007-08-30 出生，当年生日还没过就减 1
       var age = now.getFullYear() - 2007;
       if (now < new Date(now.getFullYear(), 7, 30)) { age -= 1; } // 月份 0 起算，7 = 八月
-      document.getElementById("year").innerHTML = age;
+      document.querySelectorAll(".year").forEach(function (el) { el.innerHTML = age; });
 
       // 年级：2025-2026 学年为大二，每年秋季（9 月起）自动 +1
-      var grades = ["大一", "大二", "大三", "大四"];
+      var gradesZh = ["大一", "大二", "大三", "大四"];
+      var gradesEn = ["freshman", "sophomore", "junior", "senior"];
       var acadYear = (now.getMonth() >= 8) ? now.getFullYear() : now.getFullYear() - 1;
       var gi = acadYear - 2024; // 2024 秋 = 大一
       if (gi < 0) { gi = 0; }
       if (gi > 3) { gi = 3; } // 毕业后封顶在大四，到时记得手动更新
-      document.getElementById("grade").innerHTML = grades[gi];
+      document.querySelector(".grade-zh").innerHTML = gradesZh[gi];
+      document.querySelector(".grade-en").innerHTML = gradesEn[gi];
     </script>
 
   </div>
@@ -297,7 +317,8 @@
     </script>
 
     <footer class="site-footer">
-      Website template from <a href="https://www.cicada000.work/" target="_blank" rel="noopener">here</a>
+      <span class="lang-zh">網站模板來自<a href="https://www.cicada000.work/" target="_blank" rel="noopener">這裡</a></span>
+      <span class="lang-en">Website template from <a href="https://www.cicada000.work/" target="_blank" rel="noopener">here</a></span>
     </footer>
 </body>
 
